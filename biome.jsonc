@@ -1,0 +1,15 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "extends": ["@kontent-ai/biome-config/base", "@kontent-ai/biome-config/react"],
+  "files": {
+    "includes": ["!model"]
+  },
+  "linter": {
+    "rules": {
+      "correctness": {
+        // Metro uses extensionless imports for platform-specific file resolution (.web.tsx, .ios.tsx, etc.)
+        "useImportExtensions": "off"
+      }
+    }
+  }
+}
