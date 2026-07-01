@@ -1,4 +1,5 @@
 import { Image } from "expo-image";
+import type { ReactNode } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { BrandColors, BrandFonts } from "@/constants/theme";
 
@@ -15,12 +16,6 @@ const styles = StyleSheet.create({
     color: BrandColors.burgundy,
     lineHeight: 44,
   },
-  subheadline: {
-    fontFamily: BrandFonts.body,
-    fontSize: 18,
-    color: BrandColors.gray,
-    lineHeight: 28,
-  },
   imageContainer: {
     width: "100%",
     aspectRatio: 670 / 440,
@@ -33,15 +28,15 @@ const styles = StyleSheet.create({
 
 type HeroImageProps = {
   readonly headline: string;
-  readonly subheadline: string;
   readonly imageUrl: string;
+  readonly children?: ReactNode;
 };
 
-export const HeroImage = ({ headline, subheadline, imageUrl }: HeroImageProps) => (
+export const HeroImage = ({ headline, imageUrl, children }: HeroImageProps) => (
   <View style={styles.container}>
     <View style={styles.textContainer}>
       <Text style={styles.headline}>{headline}</Text>
-      <Text style={styles.subheadline}>{subheadline}</Text>
+      {children}
     </View>
     <View style={styles.imageContainer}>
       <Image source={{ uri: imageUrl }} style={styles.image} contentFit="cover" />

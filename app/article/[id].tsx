@@ -1,4 +1,3 @@
-import { Image } from "expo-image";
 import { useLocalSearchParams } from "expo-router";
 import { RefreshControl, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -17,10 +16,6 @@ const styles = StyleSheet.create({
     backgroundColor: BrandColors.white,
     justifyContent: "center",
     alignItems: "center",
-  },
-  heroImage: {
-    width: "100%",
-    aspectRatio: 16 / 9,
   },
   content: {
     padding: 24,
@@ -50,7 +45,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: BrandColors.grayLight,
   },
-  introduction: {
+  perex: {
     fontFamily: BrandFonts.body,
     fontSize: 18,
     fontWeight: "600",
@@ -93,27 +88,21 @@ export default function ArticleDetail() {
     );
   }
 
-  const { title, introduction, image, publish_date, body_copy } = article.elements;
-  const imageUrl = image?.value?.[0]?.url;
+  const { title, perex, published_date, body } = article.elements;
 
   return (
     <SafeAreaView style={styles.container} edges={["bottom"]}>
       <ScrollView refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={refetch} />}>
-        {!!imageUrl && (
-          <Image source={{ uri: imageUrl }} style={styles.heroImage} contentFit="cover" />
-        )}
         <View style={styles.content}>
           <View style={styles.badge}>
             <Text style={styles.badgeText}>ARTICLE</Text>
           </View>
           {!!title?.value && <Text style={styles.title}>{title.value}</Text>}
-          {!!publish_date?.value && (
-            <Text style={styles.date}>{formatDate(publish_date.value)}</Text>
+          {!!published_date?.value && (
+            <Text style={styles.date}>{formatDate(published_date.value)}</Text>
           )}
-          {!!introduction?.value && <Text style={styles.introduction}>{introduction.value}</Text>}
-          {!!body_copy?.value && (
-            <RichText value={body_copy.value} linkedItems={body_copy.linkedItems} />
-          )}
+          {!!perex?.value && <Text style={styles.perex}>{perex.value}</Text>}
+          {!!body?.value && <RichText value={body.value} />}
         </View>
       </ScrollView>
     </SafeAreaView>

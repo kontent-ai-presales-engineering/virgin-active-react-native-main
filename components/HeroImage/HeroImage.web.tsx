@@ -1,4 +1,5 @@
 import { Image } from "expo-image";
+import type { ReactNode } from "react";
 import { StyleSheet, Text, useWindowDimensions, View } from "react-native";
 import { BrandColors, BrandFonts } from "@/constants/theme";
 
@@ -50,16 +51,6 @@ const styles = StyleSheet.create({
     fontSize: 94,
     lineHeight: 78,
   },
-  subheadline: {
-    fontFamily: BrandFonts.body,
-    fontSize: 20,
-    color: BrandColors.creme,
-    lineHeight: 30,
-    textAlign: "center",
-  },
-  subheadlineWide: {
-    textAlign: "left",
-  },
   imageContainer: {
     width: "100%",
     aspectRatio: 660 / 770,
@@ -76,11 +67,11 @@ const styles = StyleSheet.create({
 
 type HeroImageProps = {
   readonly headline: string;
-  readonly subheadline: string;
   readonly imageUrl: string;
+  readonly children?: ReactNode;
 };
 
-export const HeroImage = ({ headline, subheadline, imageUrl }: HeroImageProps) => {
+export const HeroImage = ({ headline, imageUrl, children }: HeroImageProps) => {
   const { width } = useWindowDimensions();
   const isWide = width >= 1024;
   const isExtraWide = width >= 1280;
@@ -99,9 +90,7 @@ export const HeroImage = ({ headline, subheadline, imageUrl }: HeroImageProps) =
             >
               {headline}
             </Text>
-            <Text style={[styles.subheadline, isWide && styles.subheadlineWide]}>
-              {subheadline}
-            </Text>
+            {children}
           </View>
           <View style={[styles.imageContainer, isWide && styles.imageContainerWide]}>
             <Image source={{ uri: imageUrl }} style={styles.image} contentFit="cover" />

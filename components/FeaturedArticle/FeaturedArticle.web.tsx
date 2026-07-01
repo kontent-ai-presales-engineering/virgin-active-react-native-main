@@ -1,4 +1,3 @@
-import { Image } from "expo-image";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { BrandColors, BrandFonts } from "@/constants/theme";
 import type { ArticleType } from "@/model/index";
@@ -8,25 +7,10 @@ const styles = StyleSheet.create({
     paddingVertical: 104,
   },
   container: {
-    flexDirection: "row",
-    gap: 64,
-    alignItems: "center",
-  },
-  imageContainer: {
-    position: "relative",
-    borderRadius: 8,
-    overflow: "hidden",
-    width: 440,
-    height: 280,
-  },
-  image: {
-    width: "100%",
-    height: "100%",
+    gap: 20,
   },
   badge: {
-    position: "absolute",
-    top: 16,
-    left: 16,
+    alignSelf: "flex-start",
     backgroundColor: BrandColors.azure,
     paddingVertical: 6,
     paddingHorizontal: 12,
@@ -77,7 +61,7 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     lineHeight: 18,
   },
-  introduction: {
+  perex: {
     fontFamily: BrandFonts.body,
     fontSize: 20,
     color: BrandColors.gray,
@@ -118,25 +102,19 @@ export const FeaturedArticle = ({ article, onReadMore }: FeaturedArticleProps) =
     return null;
   }
 
-  const { title, introduction, image, publish_date, topics } = article.elements;
-  const imageUrl = image?.value?.[0]?.url;
-  const tags = topics?.value ?? [];
+  const { title, perex, published_date, tags: tagsElement } = article.elements;
+  const tags = tagsElement?.value ?? [];
 
   return (
     <View style={styles.wrapper}>
       <View style={styles.container}>
-        <View style={styles.imageContainer}>
-          {!!imageUrl && (
-            <Image source={{ uri: imageUrl }} style={styles.image} contentFit="cover" />
-          )}
-          <View style={styles.badge}>
-            <Text style={styles.badgeText}>FEATURED ARTICLE</Text>
-          </View>
+        <View style={styles.badge}>
+          <Text style={styles.badgeText}>FEATURED ARTICLE</Text>
         </View>
         <View style={styles.content}>
           {!!title?.value && <Text style={styles.title}>{title.value}</Text>}
-          {!!publish_date?.value && (
-            <Text style={styles.date}>{formatDate(publish_date.value)}</Text>
+          {!!published_date?.value && (
+            <Text style={styles.date}>{formatDate(published_date.value)}</Text>
           )}
           {tags.length > 0 && (
             <View style={styles.tagsContainer}>
@@ -147,7 +125,7 @@ export const FeaturedArticle = ({ article, onReadMore }: FeaturedArticleProps) =
               ))}
             </View>
           )}
-          {!!introduction?.value && <Text style={styles.introduction}>{introduction.value}</Text>}
+          {!!perex?.value && <Text style={styles.perex}>{perex.value}</Text>}
           <Pressable style={styles.readMore} onPress={onReadMore}>
             <Text style={styles.readMoreText}>Read more</Text>
           </Pressable>

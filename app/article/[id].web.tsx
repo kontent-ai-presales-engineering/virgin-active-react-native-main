@@ -1,4 +1,3 @@
-import { Image } from "expo-image";
 import { useLocalSearchParams } from "expo-router";
 import { StyleSheet, Text, useWindowDimensions, View } from "react-native";
 import { Container } from "@/components/Container/Container";
@@ -22,21 +21,7 @@ const styles = StyleSheet.create({
     paddingBottom: 160,
   },
   heroContent: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 64,
-  },
-  heroContentStacked: {
-    flexDirection: "column-reverse",
-    gap: 32,
-  },
-  heroText: {
-    flex: 1,
     gap: 24,
-  },
-  heroTextStacked: {
-    flex: undefined,
-    width: "100%",
   },
   tag: {
     alignSelf: "flex-start",
@@ -64,20 +49,10 @@ const styles = StyleSheet.create({
     fontSize: 48,
     lineHeight: 44,
   },
-  heroImageContainer: {
-    width: 670,
-    height: 440,
-    borderRadius: 8,
-    overflow: "hidden",
-  },
-  heroImageStacked: {
-    width: "100%",
-    height: undefined,
-    aspectRatio: 670 / 440,
-  },
-  heroImage: {
-    width: "100%",
-    height: "100%",
+  heroDate: {
+    fontFamily: BrandFonts.body,
+    fontSize: 14,
+    color: BrandColors.white,
   },
   contentSection: {
     backgroundColor: BrandColors.white,
@@ -90,7 +65,7 @@ const styles = StyleSheet.create({
     width: "100%",
     gap: 20,
   },
-  introduction: {
+  perex: {
     fontFamily: BrandFonts.body,
     fontSize: 24,
     fontWeight: "600",
@@ -98,6 +73,18 @@ const styles = StyleSheet.create({
     lineHeight: 36,
   },
 });
+
+const formatDate = (dateString: string | null | undefined): string => {
+  if (!dateString) {
+    return "";
+  }
+  const date = new Date(dateString);
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+};
 
 export default function ArticleDetail() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -127,39 +114,31 @@ export default function ArticleDetail() {
     );
   }
 
-  const { title, introduction, image, article_type, body_copy } = article.elements;
-  const imageUrl = image?.value?.[0]?.url;
-  const articleTypeName = article_type?.value?.[0]?.name ?? "Article";
+  const { title, perex, published_date, body } = article.elements;
 
   return (
     <WebLayout>
       <View style={styles.heroSection}>
         <Container>
-          <View style={[styles.heroContent, !isWide && styles.heroContentStacked]}>
-            <View style={[styles.heroText, !isWide && styles.heroTextStacked]}>
-              <View style={styles.tag}>
-                <Text style={styles.tagText}>{articleTypeName}</Text>
-              </View>
-              {!!title?.value && (
-                <Text style={[styles.heroTitle, !isWide && styles.heroTitleStacked]}>
-                  {title.value}
-                </Text>
-              )}
+          <View style={styles.heroContent}>
+            <View style={styles.tag}>
+              <Text style={styles.tagText}>Article</Text>
             </View>
-            {!!imageUrl && (
-              <View style={[styles.heroImageContainer, !isWide && styles.heroImageStacked]}>
-                <Image source={{ uri: imageUrl }} style={styles.heroImage} contentFit="cover" />
-              </View>
+            {!!title?.value && (
+              <Text style={[styles.heroTitle, !isWide && styles.heroTitleStacked]}>
+                {title.value}
+              </Text>
+            )}
+            {!!published_date?.value && (
+              <Text style={styles.heroDate}>{formatDate(published_date.value)}</Text>
             )}
           </View>
         </Container>
       </View>
       <View style={styles.contentSection}>
         <View style={styles.contentInner}>
-          {!!introduction?.value && <Text style={styles.introduction}>{introduction.value}</Text>}
-          {!!body_copy?.value && (
-            <RichText value={body_copy.value} linkedItems={body_copy.linkedItems} />
-          )}
+          {!!perex?.value && <Text style={styles.perex}>{perex.value}</Text>}
+          {!!body?.value && <RichText value={body.value} />}
         </View>
       </View>
     </WebLayout>

@@ -1,10 +1,21 @@
 {
   "permissions": {
     "allow": [
-      "Bash(rm /c/projects/virgin-active-react-native-main/model/collections/default-collection.generated.ts.orig* 2>/dev/null; ls /c/projects/virgin-active-react-native-main/model/types /c/projects/virgin-active-react-native-main/model/taxonomies /c/projects/virgin-active-react-native-main/model/snippets)"
+      "Bash(rm /c/projects/virgin-active-react-native-main/model/collections/default-collection.generated.ts.orig* 2>/dev/null; ls /c/projects/virgin-active-react-native-main/model/types /c/projects/virgin-active-react-native-main/model/taxonomies /c/projects/virgin-active-react-native-main/model/snippets)",
+      "Bash(perl -0pi -e 's/\\\\bintroduction: \\\\{/perex: {/; s/styles\\\\.introduction/styles.perex/g' components/ArticleItem/ArticleItem.tsx components/FeaturedArticle/FeaturedArticle.tsx app/article/\\\\[id\\\\].tsx)",
+      "Bash(npx expo *)",
+      "Bash(echo \"started with pid $!\")",
+      "Skill(run)",
+      "Skill(run:*)",
+      "Bash(chromium-cli --session vagym)",
+      "Bash(npx -y playwright --version)",
+      "Bash(node -e \"require.resolve\\('playwright'\\)\")",
+      "Bash(cp \"/c/Users/MAARTE~1/AppData/Local/Temp/claude/c--projects-virgin-active-react-native-main/fa3ff1a3-1b8c-4077-9b24-a06f1364d2b3/scratchpad/check-faq.js\" ./check-faq.cjs && node check-faq.cjs; rm -f check-faq.cjs)",
+      "Bash(taskkill //F //PID 46184)"
     ],
     "additionalDirectories": [
-      "C:\\projects\\virgin-active-react-native-main\\model\\collections"
+      "C:\\projects\\virgin-active-react-native-main\\model\\collections",
+      "C:\\Users\\MAARTE~1\\AppData\\Local\\Temp\\claude\\c--projects-virgin-active-react-native-main\\fa3ff1a3-1b8c-4077-9b24-a06f1364d2b3\\scratchpad"
     ]
   }
 }

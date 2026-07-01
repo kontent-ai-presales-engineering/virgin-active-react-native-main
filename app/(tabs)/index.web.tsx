@@ -8,8 +8,8 @@ import { Loader } from "@/components/Loader";
 import { RichText } from "@/components/RichText";
 import { WebLayout } from "@/components/WebLayout/WebLayout";
 import { BrandColors, BrandFonts } from "@/constants/theme";
-import { useLandingPage } from "@/hooks/use-landing-page";
-import { isArticleType } from "@/model/index";
+import { useArticles } from "@/hooks/use-articles";
+import { useBanner } from "@/hooks/use-banner";
 
 const styles = StyleSheet.create({
   container: {
@@ -43,7 +43,10 @@ const styles = StyleSheet.create({
 
 const HomeScreen = () => {
   const router = useRouter();
-  const { data: landingPage, isLoading } = useLandingPage();
+  const { data: banner, isLoading: isBannerLoading } = useBanner();
+  const { data: articles, isLoading: isArticlesLoading } = useArticles();
+
+  const isLoading = isBannerLoading || isArticlesLoading;
 
   if (isLoading) {
     return (
@@ -53,40 +56,32 @@ const HomeScreen = () => {
     );
   }
 
-  const heroImageUrl = landingPage?.elements.hero_image.value[0]?.url;
-  const featuredContent = landingPage?.elements.featured_content.linkedItems ?? [];
-  const firstArticle = featuredContent.find(isArticleType);
+  const heroImageUrl = banner?.elements.image.value[0]?.url;
+  const featuredArticle = articles?.[0];
 
   return (
     <WebLayout>
       <SafeAreaView style={styles.container} edges={["top"]}>
         <View style={styles.webContent}>
-          {!!landingPage && !!heroImageUrl && (
-            <HeroImage
-              headline={landingPage.elements.headline.value}
-              subheadline={landingPage.elements.subheadline.value}
-              imageUrl={heroImageUrl}
-            />
+          {!!banner && !!heroImageUrl && (
+            <Container>
+              <View style={styles.contentSection}>
+                <HeroImage headline={banner.elements.headline.value ?? ""} imageUrl={heroImageUrl}>
+                  {!!banner.elements.body.value && <RichText value={banner.elements.body.value} />}
+                </HeroImage>
+              </View>
+            </Container>
           )}
 
-          <Container>
-            <View style={styles.contentSection}>
-              {!!landingPage?.elements.body_copy.value && (
-                <RichText
-                  value={landingPage.elements.body_copy.value}
-                  linkedItems={landingPage.elements.body_copy.linkedItems}
-                />
-              )}
-            </View>
-          </Container>
-
-          {!!firstArticle && (
+          {!!featuredArticle && (
             <View style={styles.cremeSection}>
               <Container>
-                <FeaturedArticle
-                  article={firstArticle}
-                  onReadMore={() => router.push(`/article/${firstArticle.system.id}`)}
-                />
+                <View style={styles.contentSection}>
+                  <FeaturedArticle
+                    article={featuredArticle}
+                    onReadMore={() => router.push(`/article/${featuredArticle.system.id}`)}
+                  />
+                </View>
               </Container>
             </View>
           )}

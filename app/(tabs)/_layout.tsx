@@ -21,10 +21,26 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="membership"
+        options={{
+          title: "Membership",
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="creditcard.fill" color={color} />,
+        }}
+      />
+      <Tabs.Screen
         name="articles"
         options={{
           title: "Articles",
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="doc.text.fill" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="faq"
+        options={{
+          title: "FAQ",
+          tabBarIcon: ({ color }) => (
+            <IconSymbol size={28} name="questionmark.circle.fill" color={color} />
+          ),
         }}
       />
       <Tabs.Screen

@@ -1,28 +1,11 @@
-import { Image } from "expo-image";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { BrandColors, BrandFonts } from "@/constants/theme";
 import type { ArticleType } from "@/model/index";
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
-    gap: 64,
-    paddingTop: 98,
-    paddingBottom: 150,
-  },
-  imageContainer: {
-    width: 440,
-    height: 288,
-    borderRadius: 6,
-    overflow: "hidden",
-  },
-  image: {
-    width: "100%",
-    height: "100%",
-  },
-  content: {
-    flex: 2,
-    justifyContent: "center",
+    paddingTop: 48,
+    paddingBottom: 48,
     gap: 20,
   },
   title: {
@@ -36,7 +19,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: BrandColors.grayLight,
   },
-  introduction: {
+  perex: {
     fontFamily: BrandFonts.body,
     fontSize: 20,
     color: BrandColors.gray,
@@ -75,26 +58,22 @@ export const ArticleItem = ({ article, onReadMore }: ArticleItemProps) => {
     return null;
   }
 
-  const { title, introduction, image, publish_date } = article.elements;
-  const imageUrl = image?.value?.[0]?.url;
+  const { title, perex, published_date } = article.elements;
 
   return (
     <View style={styles.container}>
-      <View style={styles.imageContainer}>
-        {!!imageUrl && <Image source={{ uri: imageUrl }} style={styles.image} contentFit="cover" />}
-      </View>
-      <View style={styles.content}>
-        {!!title?.value && <Text style={styles.title}>{title.value}</Text>}
-        {!!publish_date?.value && <Text style={styles.date}>{formatDate(publish_date.value)}</Text>}
-        {!!introduction?.value && (
-          <Text style={styles.introduction} numberOfLines={4}>
-            {introduction.value}
-          </Text>
-        )}
-        <Pressable style={styles.readMore} onPress={onReadMore}>
-          <Text style={styles.readMoreText}>Read more</Text>
-        </Pressable>
-      </View>
+      {!!title?.value && <Text style={styles.title}>{title.value}</Text>}
+      {!!published_date?.value && (
+        <Text style={styles.date}>{formatDate(published_date.value)}</Text>
+      )}
+      {!!perex?.value && (
+        <Text style={styles.perex} numberOfLines={4}>
+          {perex.value}
+        </Text>
+      )}
+      <Pressable style={styles.readMore} onPress={onReadMore}>
+        <Text style={styles.readMoreText}>Read more</Text>
+      </Pressable>
     </View>
   );
 };

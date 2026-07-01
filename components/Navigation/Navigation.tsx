@@ -5,7 +5,9 @@ import { BrandColors, BrandFonts } from "@/constants/theme";
 
 const MENU_ITEMS = [
   { label: "Home", href: "/" },
+  { label: "Membership", href: "/membership" },
   { label: "Articles", href: "/articles" },
+  { label: "FAQ", href: "/faq" },
 ] as const;
 
 const styles = StyleSheet.create({

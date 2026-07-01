@@ -8,8 +8,8 @@ import { Loader } from "@/components/Loader";
 import { Logo } from "@/components/Logo";
 import { RichText } from "@/components/RichText";
 import { BrandColors, BrandFonts } from "@/constants/theme";
-import { useLandingPage } from "@/hooks/use-landing-page";
-import { isArticleType } from "@/model/index";
+import { useArticles } from "@/hooks/use-articles";
+import { useBanner } from "@/hooks/use-banner";
 
 const styles = StyleSheet.create({
   container: {
@@ -43,7 +43,25 @@ const styles = StyleSheet.create({
 
 const HomeScreen = () => {
   const router = useRouter();
-  const { data: landingPage, isLoading, refetch, isRefetching } = useLandingPage();
+  const {
+    data: banner,
+    isLoading: isBannerLoading,
+    refetch: refetchBanner,
+    isRefetching: isRefetchingBanner,
+  } = useBanner();
+  const {
+    data: articles,
+    isLoading: isArticlesLoading,
+    refetch: refetchArticles,
+    isRefetching: isRefetchingArticles,
+  } = useArticles();
+
+  const isLoading = isBannerLoading || isArticlesLoading;
+  const isRefetching = isRefetchingBanner || isRefetchingArticles;
+  const refetch = () => {
+    void refetchBanner();
+    void refetchArticles();
+  };
 
   if (isLoading) {
     return (
@@ -53,9 +71,8 @@ const HomeScreen = () => {
     );
   }
 
-  const heroImageUrl = landingPage?.elements.hero_image.value[0]?.url;
-  const featuredContent = landingPage?.elements.featured_content.linkedItems ?? [];
-  const firstArticle = featuredContent.find(isArticleType);
+  const heroImageUrl = banner?.elements.image.value[0]?.url;
+  const featuredArticle = articles?.[0];
 
   return (
     <SafeAreaView style={styles.container} edges={["top"]}>
@@ -65,36 +82,25 @@ const HomeScreen = () => {
       >
         <View style={styles.headerSection}>
           <Logo />
-          {!!landingPage && !!heroImageUrl && (
-            <HeroImage
-              headline={landingPage.elements.headline.value}
-              subheadline={landingPage.elements.subheadline.value}
-              imageUrl={heroImageUrl}
-            />
+          {!!banner && !!heroImageUrl && (
+            <HeroImage headline={banner.elements.headline.value ?? ""} imageUrl={heroImageUrl}>
+              {!!banner.elements.body.value && <RichText value={banner.elements.body.value} />}
+            </HeroImage>
           )}
         </View>
 
-        <View style={styles.contentSection}>
-          {!!landingPage?.elements.body_copy.value && (
-            <>
-              <RichText
-                value={landingPage.elements.body_copy.value}
-                linkedItems={landingPage.elements.body_copy.linkedItems}
-              />
-              <Divider />
-            </>
-          )}
-
-          {!!firstArticle && (
-            <>
+        {!!featuredArticle && (
+          <>
+            <Divider />
+            <View style={styles.contentSection}>
               <Text style={styles.sectionSubtitle}>Featured</Text>
               <FeaturedArticle
-                article={firstArticle}
-                onReadMore={() => router.push(`/article/${firstArticle.system.id}`)}
+                article={featuredArticle}
+                onReadMore={() => router.push(`/article/${featuredArticle.system.id}`)}
               />
-            </>
-          )}
-        </View>
+            </View>
+          </>
+        )}
       </ScrollView>
     </SafeAreaView>
   );

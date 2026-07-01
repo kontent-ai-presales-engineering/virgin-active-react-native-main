@@ -1,6 +1,4 @@
-import type { IContentItem } from "@kontent-ai/delivery-sdk";
 import {
-  type PortableTextComponentOrItem,
   type PortableTextExternalLink,
   type PortableTextImage,
   transformToPortableText,
@@ -15,13 +13,9 @@ import { Image } from "expo-image";
 import { useMemo } from "react";
 import { Linking, StyleSheet, Text, View } from "react-native";
 import { BrandColors, BrandFonts } from "@/constants/theme";
-import { isCallToActionType, isDisclaimerType } from "@/model/index";
-import { Callout } from "./Callout/Callout";
-import { CallToAction } from "./CallToAction/CallToAction";
 
 type RichTextProps = {
   readonly value: string;
-  readonly linkedItems?: ReadonlyArray<IContentItem>;
 };
 
 const styles = StyleSheet.create({
@@ -86,15 +80,9 @@ const styles = StyleSheet.create({
     height: "100%",
     borderRadius: 8,
   },
-  componentWrapper: {
-    marginVertical: 0,
-  },
 });
 
-const createComponents = (
-  linkedItems: ReadonlyArray<IContentItem>,
-  ctaIndexMap: Map<string, number>,
-): PortableTextComponents => ({
+const createComponents = (): PortableTextComponents => ({
   block: {
     normal: ({ children }) => <Text style={styles.paragraph}>{children}</Text>,
     h1: ({ children }) => <Text style={styles.h1}>{children}</Text>,
@@ -153,53 +141,12 @@ const createComponents = (
         </View>
       );
     }) as PortableTextTypeComponent<PortableTextImage>,
-    componentOrItem: (({ value }) => {
-      const item = linkedItems.find((i) => i.system.codename === value.componentOrItem._ref);
-      if (!item) {
-        return null;
-      }
-
-      if (isDisclaimerType(item)) {
-        return (
-          <View style={styles.componentWrapper}>
-            <Callout title={item.elements.headline.value} body={item.elements.subheadline.value} />
-          </View>
-        );
-      }
-
-      if (isCallToActionType(item)) {
-        const ctaIndex = ctaIndexMap.get(item.system.codename) ?? 0;
-        return (
-          <View style={styles.componentWrapper}>
-            <CallToAction
-              title={item.elements.headline.value}
-              description={item.elements.subheadline.value}
-              buttonText={item.elements.button_label.value}
-              buttonUrl={item.elements.button_link.linkedItems[0]?.elements.url?.value ?? ""}
-              imageUrl={item.elements.image.value[0]?.url}
-              imagePosition={ctaIndex % 2 === 0 ? "right" : "left"}
-            />
-          </View>
-        );
-      }
-
-      return null;
-    }) as PortableTextTypeComponent<PortableTextComponentOrItem>,
   },
 });
 
-export const RichText = ({ value, linkedItems = [] }: RichTextProps) => {
+export const RichText = ({ value }: RichTextProps) => {
   const portableText = useMemo(() => transformToPortableText(value), [value]);
-
-  const ctaIndexMap = useMemo(() => {
-    const ctaItems = linkedItems.filter(isCallToActionType);
-    return new Map(ctaItems.map((item, index) => [item.system.codename, index]));
-  }, [linkedItems]);
-
-  const components = useMemo(
-    () => createComponents(linkedItems, ctaIndexMap),
-    [linkedItems, ctaIndexMap],
-  );
+  const components = useMemo(() => createComponents(), []);
 
   return <PortableText value={portableText} components={components} />;
 };

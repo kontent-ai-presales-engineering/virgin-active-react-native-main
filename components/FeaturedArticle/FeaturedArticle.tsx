@@ -1,4 +1,3 @@
-import { Image } from "expo-image";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { BrandColors, BrandFonts } from "@/constants/theme";
 import type { ArticleType } from "@/model/index";
@@ -8,21 +7,8 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     gap: 24,
   },
-  imageContainer: {
-    position: "relative",
-    borderRadius: 8,
-    overflow: "hidden",
-    width: "100%",
-    aspectRatio: 16 / 9,
-  },
-  image: {
-    width: "100%",
-    height: "100%",
-  },
   badge: {
-    position: "absolute",
-    top: 16,
-    left: 16,
+    alignSelf: "flex-start",
     backgroundColor: BrandColors.azure,
     paddingVertical: 6,
     paddingHorizontal: 12,
@@ -48,7 +34,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: BrandColors.grayLight,
   },
-  introduction: {
+  perex: {
     fontFamily: BrandFonts.body,
     fontSize: 16,
     color: BrandColors.gray,
@@ -87,21 +73,19 @@ export const FeaturedArticle = ({ article, onReadMore }: FeaturedArticleProps) =
     return null;
   }
 
-  const { title, introduction, image, publish_date } = article.elements;
-  const imageUrl = image?.value?.[0]?.url;
+  const { title, perex, published_date } = article.elements;
 
   return (
     <View style={styles.container}>
-      <View style={styles.imageContainer}>
-        {!!imageUrl && <Image source={{ uri: imageUrl }} style={styles.image} contentFit="cover" />}
-        <View style={styles.badge}>
-          <Text style={styles.badgeText}>FEATURED ARTICLE</Text>
-        </View>
+      <View style={styles.badge}>
+        <Text style={styles.badgeText}>FEATURED ARTICLE</Text>
       </View>
       <View style={styles.content}>
         {!!title?.value && <Text style={styles.title}>{title.value}</Text>}
-        {!!publish_date?.value && <Text style={styles.date}>{formatDate(publish_date.value)}</Text>}
-        {!!introduction?.value && <Text style={styles.introduction}>{introduction.value}</Text>}
+        {!!published_date?.value && (
+          <Text style={styles.date}>{formatDate(published_date.value)}</Text>
+        )}
+        {!!perex?.value && <Text style={styles.perex}>{perex.value}</Text>}
         <Pressable style={styles.readMore} onPress={onReadMore}>
           <Text style={styles.readMoreText}>Read more</Text>
         </Pressable>
