@@ -24,7 +24,13 @@
       "Bash(rm -f /c/projects/virgin-active-react-native-main/.emu-screen*.png /c/projects/virgin-active-react-native-main/.emulator.log /c/projects/virgin-active-react-native-main/.expo-android.log)",
       "Bash(tasklist //FI \"IMAGENAME eq node.exe\")",
       "Bash(nohup npx expo start --port 8092)",
-      "Bash(ipconfig)"
+      "Bash(ipconfig)",
+      "Bash(nohup npx expo start --web --port 8093)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:8093/)",
+      "mcp__claude_ai_Vercel__list_teams",
+      "mcp__claude_ai_Vercel__list_projects",
+      "mcp__claude_ai_Vercel__deploy_to_vercel",
+      "Bash(npx vercel *)"
     ],
     "additionalDirectories": [
       "C:\\projects\\virgin-active-react-native-main\\model\\collections",
