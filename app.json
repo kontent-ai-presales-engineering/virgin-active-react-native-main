@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "karma-react-native",
-    "slug": "karma-react-native",
+    "name": "Join a Gym",
+    "slug": "join-a-gym",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "karmareactnative",
+    "scheme": "joinagym",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {

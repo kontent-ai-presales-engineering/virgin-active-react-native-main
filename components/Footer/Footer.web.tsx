@@ -33,6 +33,6 @@ export const Footer = () => (
       <Navigation />
     </View>
     <View style={styles.divider} />
-    <Text style={styles.copyright}>©2024 Karma Health, LLC. All Rights Reserved.</Text>
+    <Text style={styles.copyright}>©2024 Join a Gym. All Rights Reserved.</Text>
   </View>
 );

@@ -1,0 +1,17 @@
+env: load .env.local .env
+env: export EXPO_PUBLIC_KONTENT_ENVIRONMENT_ID EXPO_PUBLIC_KONTENT_PREVIEW_API_KEY KONTENT_MANAGEMENT_API_KEY
+Starting project at C:\projects\virgin-active-react-native-main
+React Compiler enabled
+Starting Metro Bundler
+The following packages should be updated for best compatibility with the installed expo version:
+  expo@54.0.33 - expected version: ~54.0.35
+  expo-font@14.0.11 - expected version: ~14.0.12
+  expo-linking@8.0.11 - expected version: ~8.0.12
+  expo-router@6.0.23 - expected version: ~6.0.24
+  expo-web-browser@15.0.10 - expected version: ~15.0.11
+Your project may not work correctly until you install the expected versions of the packages.
+Waiting on http://localhost:8092
+Logs for your project will appear below.
+Android node_modules\expo-router\entry.js ░░░░░░░░░░░░░░░░  0.0% (0/1)
+Android node_modules\expo-router\entry.js ▓▓▓▓▓▓▓▓▓▓▓░░░░░ 69.8% ( 999/1196)
+Android Bundled 5702ms node_modules\expo-router\entry.js (1822 modules)

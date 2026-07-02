@@ -24,7 +24,7 @@ export const Logo = () => (
         <Rect x={0} y={13} width={40} height={14} rx={2.4} fill={BrandColors.burgundy} />
         <Rect x={13} y={0} width={14} height={40} rx={2.4} fill={BrandColors.burgundy} />
       </Svg>
-      <Text style={styles.text}>Karma Health</Text>
+      <Text style={styles.text}>Join a Gym</Text>
     </Pressable>
   </Link>
 );
