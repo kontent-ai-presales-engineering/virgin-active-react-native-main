@@ -30,7 +30,9 @@
       "mcp__claude_ai_Vercel__list_teams",
       "mcp__claude_ai_Vercel__list_projects",
       "mcp__claude_ai_Vercel__deploy_to_vercel",
-      "Bash(npx vercel *)"
+      "Bash(npx vercel *)",
+      "Bash(curl -s -o /dev/null -w \"home: %{http_code}\\\\n\" \"https://virgin-active-react-native-main.vercel.app/\")",
+      "Bash(curl -s -o /dev/null -w \"article: %{http_code}\\\\n\" \"https://virgin-active-react-native-main.vercel.app/article/2979d447-2791-4b5d-b60f-218002c4f9ed\")"
     ],
     "additionalDirectories": [
       "C:\\projects\\virgin-active-react-native-main\\model\\collections",
