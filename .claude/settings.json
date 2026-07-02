@@ -32,7 +32,19 @@
       "mcp__claude_ai_Vercel__deploy_to_vercel",
       "Bash(npx vercel *)",
       "Bash(curl -s -o /dev/null -w \"home: %{http_code}\\\\n\" \"https://virgin-active-react-native-main.vercel.app/\")",
-      "Bash(curl -s -o /dev/null -w \"article: %{http_code}\\\\n\" \"https://virgin-active-react-native-main.vercel.app/article/2979d447-2791-4b5d-b60f-218002c4f9ed\")"
+      "Bash(curl -s -o /dev/null -w \"article: %{http_code}\\\\n\" \"https://virgin-active-react-native-main.vercel.app/article/2979d447-2791-4b5d-b60f-218002c4f9ed\")",
+      "Bash(tasklist //FI \"IMAGENAME eq java.exe\")",
+      "Bash(\"/c/Program Files/Eclipse Adoptium/jdk-21.0.5.11-hotspot/bin/javac.exe\" -version)",
+      "Bash(rm -f /c/projects/virgin-active-react-native-main/.gradle-build.log)",
+      "Bash(JAVA_HOME=\"/c/Program Files/Eclipse Adoptium/jdk-21.0.5.11-hotspot\" nohup ./gradlew.bat assembleRelease --no-daemon)",
+      "Bash(JAVA_HOME=\"/c/Program Files/Eclipse Adoptium/jdk-21.0.5.11-hotspot\" nohup ./gradlew.bat assembleRelease --no-daemon --max-workers=1)",
+      "WebFetch(domain:forums.expo.dev)",
+      "WebFetch(domain:snack.expo.dev)",
+      "Bash(grep -E \"^\\\\-.*\\\\.\\(log|png|cjs\\)$\")",
+      "Bash(tasklist //FI \"IMAGENAME eq gradle.exe\")",
+      "Bash(taskkill //F //PID 14456)",
+      "Bash(taskkill //F //PID 21512)",
+      "Bash(git checkout *)"
     ],
     "additionalDirectories": [
       "C:\\projects\\virgin-active-react-native-main\\model\\collections",
